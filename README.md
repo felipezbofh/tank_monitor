@@ -177,8 +177,11 @@ https://s.click.aliexpress.com/e/_c3AjJmpd
  ⚠️ **ADC Pin Selection:** Use ADC1 pins (`GPIO 1 - 20`) on the ESP32. 
 
 ---
+### 2. Wifi setup
 
-### 2. Battery Voltage Monitoring Circuit
+When first powered on connect to the ESP32 AP "ESP32_Tank_Monitor_AP" to setup you local wifi
+
+### 3. Battery Voltage Monitoring Circuit
 
 The ESP32's ADC pins accept a maximum input voltage of **3.3V**. Since a fully charged Li-Ion battery outputs up to **4.2V**, a resistor voltage divider is required to scale the voltage down safely.
 
