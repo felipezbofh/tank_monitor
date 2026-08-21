@@ -289,3 +289,8 @@ Posts distance and battery data collected from a microcontroller node (e.g., ESP
   "distance": 45.5,
   "battery": 3.82
 }
+```
+
+![Box](images/box.jpg)
+![Sensor](images/sensor.jpg)
+
