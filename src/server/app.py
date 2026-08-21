@@ -206,7 +206,7 @@ def update_threshold():
 
 @app.route("/api/history", methods=["GET"])
 def get_history():
-    time_range = request.args.get("range", "1h")
+    time_range = request.args.get("range", "1d")
     now_local = datetime.now(LOCAL_TZ)
 
     if time_range == "1h":
@@ -283,10 +283,11 @@ DASHBOARD_HTML = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Tank Monitor & History</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 512 512'><path d='M0 0h512v512H0z' fill='none'/><path fill='%2300bcff' d='M160 25c-14.5 0-38 3.89-56.7 11.36c-9.29 3.73-17.41 8.37-22.69 13.25A30 30 0 0 0 75.99 55H244c-1.2-1.77-2.6-3.55-4.6-5.39c-5.3-4.88-13.4-9.52-22.7-13.25C198 28.89 174.5 25 160 25M89 73v129.9l71 42.6l71-42.6V73zm167 78v18h23v14h-30v18h51.3l29.3 29.4l12.8-12.8l-34.7-34.6H297v-14h23v-18zM84.65 221.3L39.12 494.5l17.76 3L74.3 393h171.4l17.4 104.5l17.8-3l-45.5-273.2l-16.7 10l13.7 81.8l-72.4 26.4l-72.38-26.3l13.68-81.9zb263.15 22.4s-10.2 49.6 5.2 59.7c9.8 6.4 28.8-2.9 31-15.4c3.8-19.6-36.2-44.3-36.2-44.3M377 329s-13.4 29.1-5.8 38.5c4.9 5.9 17.4 3.7 20.6-3.6C397 352.3 377 329 377 329m-292.41 2.3l48.91 17.8l-55.22 20.1zm150.81 0l6.3 37.9l-55.2-20.1zm179 7.5s1.4 32.1 12.4 36.9c7.2 3 17.2-4.7 16.8-12.7c-.8-12.6-29.2-24.2-29.2-24.2M160 358.7l44.8 16.3h-89.6zm251.7 40.5s-3.4 21.5 3.4 26.2c4.3 2.9 12.1-1 12.8-6.3c1.3-8.6-16.2-19.9-16.2-19.9'/></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 512 512'><path d='M0 0h512v512H0z' fill='none'/><path fill='%2300bcff' d='M160 25c-14.5 0-38 3.89-56.7 11.36c-9.29 3.73-17.41 8.37-22.69 13.25A30 30 0 0 0 75.99 55H244c-1.2-1.77-2.6-3.55-4.6-5.39c-5.3-4.88-13.4-9.52-22.7-13.25C198 28.89 174.5 25 160 25M89 73v129.9l71 42.6l71-42.6V73zm167 78v18h23v14h-30v18h51.3l29.3 29.4l12.8-12.8l-34.7-34.6H297v-14h23v-18zM84.65 221.3L39.12 494.5l17.76 3L74.3 393h171.4l17.4 104.5l17.8-3l-45.5-273.2l-16.7 10l13.7 81.8l-72.4 26.4l-72.38-26.3l13.68-81.9zb263.15 22.4s-10.2 49.6 5.2 59.7c9.8 6.4 28.8-2.9 31-15.4c3.8-19.6-36.2-44.3-36.2-44.3M377 329s-13.4 29.1-5.8 38.5c4.9 5.9 17.4 3.7 20.6-3.6C397 352.3 377 329 377 329m-292.41 2.3l48.91 17.8l-55.22 20.1zm150.81 0l6.3 37.9l-55.2-20.1zm179 7.5s1.4 32.1 12.4 36.9c7.2 3 17.2-4.7 16.8-12.7c-.8-12.6-29.2-24.2-29.2-24.2M160 358.7l44.8 16.3h-89.6zm251.7 40.5s-3.4 21.5 3.4 26.2c4.3 2.9 12.1-1 12.8-6.3c1.3-8.6-16.2-19.9-16.2-19.9'/></svg>">
 </head>
+
 <body class="bg-slate-900 text-white min-h-screen p-6">
     <div class="max-w-6xl mx-auto space-y-6">
         
@@ -359,8 +360,8 @@ DASHBOARD_HTML = """
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-700 pb-4">
                 <h2 class="text-lg font-bold text-slate-200">Historical Distance & Battery Trends</h2>
                 <div class="flex bg-slate-900 p-1 rounded-lg border border-slate-700 text-xs">
-                    <button onclick="setRange('1h')" id="btn-1h" class="range-btn px-3 py-1.5 rounded font-semibold bg-sky-600 text-white">1 Hour</button>
-                    <button onclick="setRange('1d')" id="btn-1d" class="range-btn px-3 py-1.5 rounded font-semibold text-slate-400 hover:text-white">1 Day</button>
+                    <button onclick="setRange('1h')" id="btn-1h" class="range-btn px-3 py-1.5 rounded font-semibold text-slate-400 hover:text-white">1 Hour</button>
+                    <button onclick="setRange('1d')" id="btn-1d" class="range-btn px-3 py-1.5 rounded font-semibold bg-sky-600 text-white">1 Day</button>
                     <button onclick="setRange('1w')" id="btn-1w" class="range-btn px-3 py-1.5 rounded font-semibold text-slate-400 hover:text-white">1 Week</button>
                     <button onclick="setRange('1m')" id="btn-1m" class="range-btn px-3 py-1.5 rounded font-semibold text-slate-400 hover:text-white">1 Month</button>
                     <button onclick="setRange('1y')" id="btn-1y" class="range-btn px-3 py-1.5 rounded font-semibold text-slate-400 hover:text-white">1 Year</button>
@@ -375,7 +376,7 @@ DASHBOARD_HTML = """
 
     <script>
         let chart;
-        let currentRange = '1h';
+        let currentRange = '1d';
         let lastTimestampTank1 = "";
         let lastTimestampTank2 = "";
 
